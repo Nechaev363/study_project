@@ -1,29 +1,21 @@
- document.cookie = 'hello=world';
+const checkBox = document.getElementById('check');
+const checkShow = document.getElementById('show');
+const pass = document.getElementById('pass');
 
+checkBox.addEventListener('change', () => {
+    // if  (checkBox.checked) {
+    //     localStorage.setItem('check', true);
+    // } else {
+    //     localStorage.setItem('check', false);
+    // }
+    localStorage.setItem('check', checkBox.checked);
 
-let data = new Date().getDate;
-document.cookie = 'javascript=8.0; expires=' + data.toGMTString();
+});
 
-const setCookie = (name, value, date, path, domain, secure) => {
-    let cookie = `${name}=${value}`;
+if (localStorage.getItem('check') === 'true') {
+    checkBox.checked = true;
+}
 
-
-    if (date) {
-    let cookieData = new Date(date);
-    cookie += '; expires=' + cookieData.toGMTString();
-    }
-
-    cookie += path ? `; path=${path}` : '';
-
-    cookie += domain ? `; domain=${domain}` : '';
-
-    cookie += secure ? `; secure` : '';
-
-    document.cookie = cookie;
-};
-
-setCookie('car', 'Tesla', data);
-
-
-
-
+checkShow.addEventListener('change', () => {
+    pass.type = checkShow.checked ? 'text' : 'password';
+});
