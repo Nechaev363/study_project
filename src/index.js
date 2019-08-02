@@ -3,12 +3,12 @@
     import 'nodelist-foreach-polyfill';
     import elementClosest from 'element-closest';
     elementClosest(window);
-    import formdataPolyfill from 'formdata-polyfill';
-    formdataPolyfill(window);
-    import es6Promise from 'es6-promise';
-    es6Promise(window);
-    import fetchPolyfill from 'fetch-polyfill';
-    fetchPolyfill(window);
+    import 'formdata-polyfill';
+    
+    import 'es6-promise';
+    
+    import 'fetch-polyfill';
+  
 
     import countTimer from './modules/countTimer';
     import toggleMenu from './modules/toggleMenu';
