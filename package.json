@@ -21,10 +21,18 @@
     "@babel/preset-env": "^7.5.5",
     "babel-loader": "^8.0.6",
     "path": "^0.12.7",
-    "webpack": "^4.38.0",
+    "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
   },
   "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nechaev363/study_JS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nechaev363/study_JS/issues"
+  },
+  "homepage": "https://github.com/Nechaev363/study_JS#readme",
   "description": ""
 }

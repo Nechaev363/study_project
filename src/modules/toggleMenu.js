@@ -4,23 +4,20 @@ const toggleMenu = () => {
     const menu = document.querySelector('menu');
     const closeBtn = document.querySelector('.close-btn');
     const menuItems = menu.querySelectorAll('ul>li');
-    const a = document.querySelectorAll('a');
+    
    
 
     const handLerMenu = () => {
-        if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
-            menu.style.transform = `translate(0)`;
-        } else {
-            menu.style.transform = `translate(-100%)`;
-        }
+        menu.classList.toggle('active-menu');
     };
+    
     main.addEventListener('click', (event) => {
         let target = event.target;
         target = target.closest('.menu');
         if (!target) {
-            menu.style.transform = `translate(-100%)`;
+            menu.style.display = `none`;
         } else {
-            menu.style.transform = `translate(0)`;
+            menu.style.transform = `translateX(100%)`;
         }
     });
 
@@ -40,6 +37,7 @@ const toggleMenu = () => {
     });
 
     btnMenu.addEventListener('click', handLerMenu);
+    
 
 };
 export default toggleMenu;
