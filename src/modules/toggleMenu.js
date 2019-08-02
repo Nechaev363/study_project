@@ -5,11 +5,9 @@ const toggleMenu = () => {
     const closeBtn = document.querySelector('.close-btn');
     const menuItems = menu.querySelectorAll('ul>li');
     const a = document.querySelectorAll('a');
-    let count = 0;
+   
 
     const handLerMenu = () => {
-
-
         if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
             menu.style.transform = `translate(0)`;
         } else {
@@ -34,7 +32,7 @@ const toggleMenu = () => {
         }
 
         for (let i = 0; i < a.length; i++) {
-            target = target.closest('li');
+            target = target.closest('a');
             if (target === menuItems[i]) {
                 handLerMenu();
             }
