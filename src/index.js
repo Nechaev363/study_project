@@ -71,6 +71,7 @@ const header = () => {
 
 header();
 
+// ajax-send-form
 const sendForm = (idForm) => {
     const errorMessage = 'Что-то пошло не так...';
     const loadMessage = 'Загрузка...';
@@ -119,7 +120,7 @@ const sendForm = (idForm) => {
 
 sendForm('form1');
 sendForm('form2');
-sendForm('form3');
+
 
 document.querySelectorAll('input[type="text"]').forEach((element) => {
     element.addEventListener('input', (elem) => {
@@ -133,3 +134,35 @@ document.querySelectorAll('input[type="tel"]').forEach((element) => {
         elem.target.value = elem.target.value.replace(/[A-z-А-я,\-=!@#№\$%\^&\*\.\/<>\?\(\)~]/gi, '');
     });
 });
+
+// slider
+
+const slider = () => {
+    const slideText = document.querySelectorAll('.slide-text');
+    const headSlider = document.querySelector('.head-slider');
+    const mainSlide = document.querySelector('.main-slider');
+    const slideHeader = document.querySelectorAll('.slide_header');
+    
+   let i = 0;
+    
+
+    const autoPlaySlide = () => {
+       
+    
+        
+
+    };
+    
+
+    const startSlide = () => {
+        setInterval(autoPlaySlide, 2000);
+    }
+
+    const stopSlide = () => {
+
+    }
+    startSlide();
+    
+}
+
+slider();
