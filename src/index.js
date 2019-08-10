@@ -142,24 +142,23 @@ const slider = () => {
     const headSlider = document.querySelector('.head-slider');
     const mainSlide = document.querySelector('.main-slider');
     const slideHeader = document.querySelectorAll('.slide_header');
+   
     
    let i = 0;
     
 
     const autoPlaySlide = () => {
-       
-    
-        
+       slideHeader[i].style.display = 'none';
+       i++;
+       if(i >= slideHeader.length) {
+           i = 0;
+       }
+       slideHeader[i].style.display = 'inline-block';
 
     };
-    
 
     const startSlide = () => {
         setInterval(autoPlaySlide, 2000);
-    }
-
-    const stopSlide = () => {
-
     }
     startSlide();
     
