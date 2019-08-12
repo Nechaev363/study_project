@@ -71,55 +71,32 @@ const header = () => {
 
 header();
 
-// ajax-send-form
-const sendForm = (idForm) => {
-    const errorMessage = 'Что-то пошло не так...';
-    const loadMessage = 'Загрузка...';
-    const successMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
-    const form = document.getElementById(idForm);
-    const statusMessage = document.createElement('div');
-    statusMessage.style.cssText = `font-size: 1rem; margin: 1rem 0; color: white`;
+// slider
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        form.appendChild(statusMessage);
-        const formData = new FormData(form);
-        let body = {};
-        formData.forEach((val, key) => {
-            body[key] = val;
-        });
-        statusMessage.textContent = loadMessage;
-        postData(body)
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('status network not 200');
-                }
-                statusMessage.textContent = successMessage;
-                const input = form.querySelectorAll('input').forEach((elem) => {
-                    elem.value = '';
-                });
-            })
-            .catch((error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
-    });
+const slider = () => {
+    const slideHeader = document.querySelectorAll('.slide_header');
+    let i = 0;
 
-    const postData = (body) => {
-        return fetch('./server.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body),
-            credentials: 'include'
-        });
+    const autoPlaySlide = () => {
+        slideHeader[i].style.display = 'none';
+        i++;
+        if (i >= slideHeader.length) {
+            i = 0;
+        }
+        slideHeader[i].style.display = 'inline-block';
+
     };
+
+    const startSlide = () => {
+        setInterval(autoPlaySlide, 2000);
+    }
+    startSlide();
 
 }
 
-sendForm('form1');
-sendForm('form2');
+slider();
+
+
 
 
 document.querySelectorAll('input[type="text"]').forEach((element) => {
@@ -135,33 +112,102 @@ document.querySelectorAll('input[type="tel"]').forEach((element) => {
     });
 });
 
-// slider
+// ajax-send-form
 
-const slider = () => {
-    const slideText = document.querySelectorAll('.slide-text');
-    const headSlider = document.querySelector('.head-slider');
-    const mainSlide = document.querySelector('.main-slider');
-    const slideHeader = document.querySelectorAll('.slide_header');
-   
-    
-   let i = 0;
-    
+const sendForm = (idForm, checkId) => {
+    const errorMessage = 'Что-то пошло не так...';
+    const form = document.getElementById(idForm);
+    const thanks = document.getElementById('thanks');
+    const statusMessage = document.createElement('div');
+    const check = document.getElementById(checkId);
 
-    const autoPlaySlide = () => {
-       slideHeader[i].style.display = 'none';
-       i++;
-       if(i >= slideHeader.length) {
-           i = 0;
-       }
-       slideHeader[i].style.display = 'inline-block';
+    statusMessage.style.cssText = `font-size: 1rem; margin: 1rem 0; color: white`;
 
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        form.appendChild(statusMessage);
+        const formData = new FormData(form);
+        let body = {};
+        formData.forEach((val, key) => {
+            body[key] = val;
+        });
+        postData(body)
+            .then((response) => {
+
+                if (response.status !== 200) {
+                    throw new Error('status network not 200');
+                }
+                thanks.addEventListener('click', (event) => {
+                    let target = event.target;
+                    if (target.matches('.btn')) {
+                        thanks.style.display = 'inline-block'
+                    }
+
+                    if (target.matches('.close_icon')) {
+                        thanks.style.display = 'none';
+                    } else if (target.matches('.close-btn')) {
+                        thanks.style.display = 'none';
+                    }
+                    target = target.closest('.overlay');
+                    if (target) {
+                        thanks.style.display = 'none';
+
+
+                    }
+                });
+
+                const input = form.querySelectorAll('input').forEach((elem) => {
+                    elem.value = '';
+                });
+            })
+            .catch((error) => {
+                thanks.style.display = 'none';
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+
+            });
+    });
+
+    const postData = (body) => {
+        return fetch('./server.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body),
+            credentials: 'include'
+        });
     };
 
-    const startSlide = () => {
-        setInterval(autoPlaySlide, 2000);
-    }
-    startSlide();
-    
-}
 
-slider();
+
+
+}
+sendForm('form1');
+sendForm('form2');
+sendForm('banner-form');
+const statusContect = document.createElement('div');
+statusContect.style.cssText = `font-size: 1rem; margin: 1rem 0; color: red`;
+
+document.body.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let target = event.target,
+        check = '';
+    target = target.closest('form');
+    if (!target.classList.contains('footer_form')) {
+        check = target.querySelector('input[type="checkbox"]').checked;
+    } else {
+        check = true;
+    }
+
+    if (!check) {
+        target.appendChild(statusContect);
+        statusContect.textContent = 'Необходимо согласиться на обработку данных...';
+    }
+    if (target && check) {
+        sendForm('form1');
+        sendForm('form2');
+        sendForm('banner-form');
+    }
+
+});
