@@ -1620,6 +1620,7 @@ nav.popup-menu .close-menu-btn img {
 }
 
 #gallery .gallery-slider {
+    position: relative;
     padding-left: 75px;
     padding-right: 75px;
     max-width: 900px;

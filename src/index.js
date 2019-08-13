@@ -99,6 +99,8 @@ slider();
 
 
 
+
+
 document.querySelectorAll('input[type="text"]').forEach((element) => {
     element.addEventListener('input', (elem) => {
         elem.target.value = elem.target.value.replace(/[A-z\.\?,0-9\-\+=!@#№\$%\^&\*~]/gi, '');
@@ -281,3 +283,63 @@ const serviceSlider = () => {
 }
 
 serviceSlider();
+
+const gallerySlider = () => {
+    const slideGalleryImg = document.querySelectorAll('.slide-gallery');
+    const slideGallery = document.querySelector('.gallery-slider');
+    let i = 0;
+    let arro;
+
+
+
+   
+    slideGallery.addEventListener('click', (event) => {
+        event.preventDefault();
+        let target = event.target;
+        target = target.closest('.slider-arrow');
+        console.log(target);
+        if (!target.matches('.prev, .next')) {
+            return;
+        }
+        if (target.matches('.prev')) {
+            
+            allSliders.style.display = 'inline-block';
+        }
+        if (target.matches('.next')) {
+            allSliders.style.display = 'none';
+        
+        }
+        
+    });
+    const arrow = () => {
+        if (!arrow) {
+            return;
+        }
+
+        const createArrow = (procreator) => {
+            let createDiv;
+            let createSpan;
+
+            for (let i = 0; i <= 1; i++) {
+                createDiv = document.createElement('div');
+                createSpan = document.createElement('span');
+                procreator.append(createDiv);
+                createDiv.classList.add('slider-arrow');
+                createDiv.appendChild(createSpan);
+                
+            }
+
+            document.querySelectorAll('.slider-arrow')[0].classList.add('prev');
+            document.querySelectorAll('.slider-arrow')[1].classList.add('next');
+        };
+        createArrow(slideGallery);
+          arro = slideGallery.querySelectorAll('.slider-arrow');
+        
+        
+    };
+    
+    
+    arrow();
+
+}
+gallerySlider();
