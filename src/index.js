@@ -114,34 +114,46 @@ document.querySelectorAll('input[type="tel"]').forEach((element) => {
 
 // ajax-send-form
 
-const sendForm = (idForm, checkId) => {
+const sendForm = (idForm) => {
     const errorMessage = 'Что-то пошло не так...';
     const form = document.getElementById(idForm);
     const thanks = document.getElementById('thanks');
     const statusMessage = document.createElement('div');
-    const check = document.getElementById(checkId);
+    
 
     statusMessage.style.cssText = `font-size: 1rem; margin: 1rem 0; color: white`;
+    const postData = (body) => {
+        return fetch('./server.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body),
+            credentials: 'include'
+        });
+    };
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
+     
+        const ckeckForm = (form) => {
+            event.preventDefault();
+        
         form.appendChild(statusMessage);
         const formData = new FormData(form);
         let body = {};
         formData.forEach((val, key) => {
             body[key] = val;
         });
+
         postData(body)
             .then((response) => {
 
                 if (response.status !== 200) {
                     throw new Error('status network not 200');
+                } else {
+                    thanks.style.display = 'inline-block';
                 }
                 thanks.addEventListener('click', (event) => {
                     let target = event.target;
-                    if (target.matches('.btn')) {
-                        thanks.style.display = 'inline-block'
-                    }
 
                     if (target.matches('.close_icon')) {
                         thanks.style.display = 'none';
@@ -161,31 +173,17 @@ const sendForm = (idForm, checkId) => {
                 });
             })
             .catch((error) => {
-                thanks.style.display = 'none';
+                
                 statusMessage.textContent = errorMessage;
                 console.error(error);
 
             });
-    });
-
-    const postData = (body) => {
-        return fetch('./server.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body),
-            credentials: 'include'
-        });
+        }
+        ckeckForm(idForm);
+        
     };
 
 
-
-
-}
-sendForm('form1');
-sendForm('form2');
-sendForm('banner-form');
 const statusContect = document.createElement('div');
 statusContect.style.cssText = `font-size: 1rem; margin: 1rem 0; color: red`;
 
@@ -205,9 +203,33 @@ document.body.addEventListener('submit', (event) => {
         statusContect.textContent = 'Необходимо согласиться на обработку данных...';
     }
     if (target && check) {
-        sendForm('form1');
-        sendForm('form2');
-        sendForm('banner-form');
+        sendForm(target);
+        statusContect.textContent = '';
     }
 
 });
+
+//service-slider 
+
+const serviceSlider = () => {
+    
+    const sliderServ = document.querySelector('.services-slider');
+    const slideSingler = document.querySelectorAll('.slide-single');
+    let i = 0;
+    for (let i = 0; i < slideSingler.length; i++) {
+        if(slideSingler.length > 5) {
+            slideSingler[i].style.cssText = `display: none`;
+            i++;
+        }
+        slideSingler[i].addEventListener('click', () => {
+            slideSingler[i].style.cssText = `display: inline-block`;
+        })
+    }
+
+    
+
+
+
+}
+
+serviceSlider()
