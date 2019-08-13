@@ -71,184 +71,6 @@ const header = () => {
 
 header();
 
-// slider
-
-const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = false) => {
-    let slider = document.querySelector(elemet),
-        slides = slider.querySelectorAll('.slide'),
-        currentSlide = 0,
-        interval,
-        dots,
-        arro;
-
-    const dot = () => {
-        if (!dote) {
-            return;
-        }
-
-        const creatDots = (father) => {
-            let creatUl = document.createElement('ul');
-
-            father.appendChild(creatUl);
-            creatUl.classList.add('slider-dots');
-
-            let ul = father.querySelector('.slider-dots');
-            for (let i = 1; i <= slides.length; i++) {
-                let creatLi = document.createElement('li'),
-                    creatBut = document.createElement('button');
-
-                ul.appendChild(creatLi);
-                creatLi.appendChild(creatBut);
-                creatLi.classList.add('dot');
-
-                if (i === 1){
-                    creatLi.classList.add('slick-active');
-                }
-            }
-        };
-        creatDots(slider);
-
-        dots = slider.querySelectorAll('.dot');
-    };
-    dot();
-
-    const arrows = () => {
-        if (!arrow) {
-            return;
-        }
-
-        const creatArrow = (father) =>{
-            let creatDiv,
-                creatSpan;
-
-            for (let i = 0; i <= 1; i++){
-                creatDiv = document.createElement('div');
-                creatSpan = document.createElement('span');
-                father.append(creatDiv);
-                creatDiv.classList.add('slider-arrow');
-                creatDiv.appendChild(creatSpan);
-            }
-
-            document.querySelectorAll('.slider-arrow')[0].classList.add('prev');
-            document.querySelectorAll('.slider-arrow')[1].classList.add('next')
-        };
-
-        creatArrow(slider);
-        arro = slider.querySelectorAll('.slider-arrow');
-    };
-    arrows();
-
-    const prevSlide = (elem, index, strClass) => {
-        if (elem[0].classList.contains('slide')) {
-            elem[index].style.display = 'none';
-        }
-        elem[index].classList.remove(strClass);
-    };
-
-    const nextSlide = (elem, index, strClass) => {
-        if (elem[0].classList.contains('slide')) {
-            elem[index].style.display = 'inline-block';
-        }
-        elem[index].classList.add(strClass);
-    };
-
-    const nexteSlide = () => {
-        slides[currentSlide].className = 'slide';
-        currentSlide = (currentSlide+1)%slides.length;
-        slides[currentSlide].className = 'slide showing';
-    };
-
-    const autoPlaySlide = () => {
-        if (carusel) {
-            prevSlide(slides, currentSlide, 'active');
-            if (dote) {
-                prevSlide(dots, currentSlide, 'slick-active');
-            }
-            nexteSlide();
-
-            if (currentSlide >= slides.length) {
-                currentSlide = 0;
-            }
-            nextSlide(slides, currentSlide, 'active');
-            if (dote) {
-                nextSlide(dots, currentSlide, 'slick-active');
-            }
-        } else{
-            prevSlide(slides, currentSlide, 'active');
-            if (dote) {
-                prevSlide(dots, currentSlide, 'slick-active');
-            }
-            currentSlide++;
-            if (currentSlide >= slides.length) {
-                currentSlide = 0;
-            }
-            nextSlide(slides, currentSlide, 'active');
-            if (dote) {
-                nextSlide(dots, currentSlide, 'slick-active');
-            }
-        }
-    };
-
-    const startSlide = () => {
-        interval = setInterval(autoPlaySlide, speed);
-    };
-
-    const stopSlide = () => {
-        clearInterval(interval);
-    };
-
-    slider.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        let target = event.target;
-        
-        if (!target.matches('.slider-arrow span, .dot button')){
-            return;
-        }
-    
-        prevSlide(slides, currentSlide, 'active');
-        prevSlide(dots, currentSlide, 'slick-active');
-
-        if (target.matches('.slider-arrow.next')) {
-            currentSlide++;
-        } else if (target.matches('.slider-arrow.prev')) {
-            currentSlide--;
-        } else if (target.closest('.dot')) {
-            dots.forEach((elem, index) => {
-                if (elem === target.closest('.dot')) {
-                    currentSlide = index;
-                }
-            });
-        }
-
-        if (currentSlide >= slides.length ) {
-            currentSlide = 0;
-        }
-        if (currentSlide < 0) {
-            currentSlide = slides.length - 1;
-        }
-
-        nextSlide(slides, currentSlide, 'active');
-        nextSlide(dots, currentSlide, 'slick-active');
-    });
-
-    slider.addEventListener('mouseover', (event) => {
-        if (event.target.matches('.slider-arrow') || event.target.matches('.dot button')) {
-            stopSlide();
-        }
-    });
-
-    slider.addEventListener('mouseout', (event) => {
-        if (event.target.matches('.slider-arrow') || event.target.matches('.dot button')) {
-            startSlide();
-        }
-    });
-
-    startSlide();
-};
-slider('.main-slider', 1000, true, false);
-slider('.gallery-slider', 2000, false, true);
-
 
 document.querySelectorAll('input[type="text"]').forEach((element) => {
     element.addEventListener('input', (elem) => {
@@ -359,78 +181,189 @@ document.body.addEventListener('submit', (event) => {
     }
 
 });
+//slider
+const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = false) => {
+   
+    let slider = document.querySelector(elemet),
+        slides = slider.querySelectorAll('.slide'),
+        currentSlide = 0,
+        interval,
+        dots,
+        arro;
 
-//service-slider 
-
-const serviceSlider = () => {
-
-    const sliderServ = document.querySelector('.services-slider');
-    const slide = sliderServ.querySelectorAll('.slider-singler');
-    const allSliders = sliderServ.querySelector('.all-sliders');
-    let arro;
-
-    let left = 0;
-    let i = 0;
-    sliderServ.addEventListener('click', (event) => {
-        event.preventDefault();
-        let target = event.target;
-        target = target.closest('.slider-arrow');
-        console.log(target);
-        if (!target.matches('.prev, .next')) {
+    const dot = () => {
+        if (!dote) {
             return;
         }
-        if (target.matches('.prev')) {
-            left = left - 225;
-            if (left <= -1125) {
-                left = 0;
-            } else {
-                left = left - 225;
+
+        const creatDots = (father) => {
+            let creatUl = document.createElement('ul');
+
+            father.appendChild(creatUl);
+            creatUl.classList.add('slider-dots');
+
+            let ul = father.querySelector('.slider-dots');
+            for (let i = 1; i <= slides.length; i++) {
+                let creatLi = document.createElement('li'),
+                    creatBut = document.createElement('button');
+
+                ul.appendChild(creatLi);
+                creatLi.appendChild(creatBut);
+                creatLi.classList.add('dot');
+
+                if (i === 1) {
+                    creatLi.classList.add('slick-active');
+                }
             }
-            allSliders.style.left = left + 'px';
-        }
-        if (target.matches('.next')) {
-            left = left - 325;
-            if (left <= -1125) {
-                left = 0;
-            }
+        };
+        creatDots(slider);
 
+        dots = slider.querySelectorAll('.dot');
+    };
+    dot();
 
-            allSliders.style.left = left + 'px';
-        }
-
-    });
-    const arrow = () => {
+    const arrows = () => {
         if (!arrow) {
             return;
         }
 
-        const createArrow = (procreator) => {
-            let createDiv;
-            let createSpan;
+        const creatArrow = (father) => {
+            let creatDiv,
+                creatSpan;
 
             for (let i = 0; i <= 1; i++) {
-                createDiv = document.createElement('div');
-                createSpan = document.createElement('span');
-                procreator.append(createDiv);
-                createDiv.classList.add('slider-arrow');
-                createDiv.appendChild(createSpan);
-
+                creatDiv = document.createElement('div');
+                creatSpan = document.createElement('span');
+                father.append(creatDiv);
+                creatDiv.classList.add('slider-arrow');
+                creatDiv.appendChild(creatSpan);
             }
 
             document.querySelectorAll('.slider-arrow')[0].classList.add('prev');
-            document.querySelectorAll('.slider-arrow')[1].classList.add('next');
+            document.querySelectorAll('.slider-arrow')[1].classList.add('next')
         };
-        createArrow(sliderServ);
-        arro = sliderServ.querySelectorAll('.slider-arrow');
 
+        creatArrow(slider);
+        arro = slider.querySelectorAll('.slider-arrow');
+    };
+    arrows();
 
+    const prevSlide = (elem, index, strClass) => {
+        if (elem[0].classList.contains('slide')) {
+            elem[index].style.display = 'none';
+        }
+        elem[index].classList.remove(strClass);
     };
 
+    const nextSlide = (elem, index, strClass) => {
+        if (elem[0].classList.contains('slide')) {
+            elem[index].style.display = 'inline-block';
+        }
+        elem[index].classList.add(strClass);
+    };
 
-    arrow();
+    const autoPlaySlide = () => {
+        if (!carusel) {
+            prevSlide(slides, currentSlide, 'active');
+            if (dote) {
+                prevSlide(dots, currentSlide, 'slick-active');
+            }
+            currentSlide++;
+            if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            }
+            nextSlide(slides, currentSlide, 'active');
+            if (dote) {
+                nextSlide(dots, currentSlide, 'slick-active');
+            }
+        }
+    };
 
-}
+    const startSlide = () => {
+        interval = setInterval(autoPlaySlide, speed);
+    };
 
-serviceSlider();
+    const stopSlide = () => {
+        clearInterval(interval);
+    };
 
+    slider.addEventListener('click', (event) => {
+        event.preventDefault();
 
+        let target = event.target;
+        
+        if (!target.matches('.slider-arrow span, .dot button')) {
+            return;
+        }
+
+        if (!carusel) {
+            prevSlide(slides, currentSlide, 'active');
+        }
+        if (dote) {
+            prevSlide(dots, currentSlide, 'slick-active');
+        }
+        const allSlider = document.querySelector('.all-sliders');
+        target = target.closest('.slider-arrow');
+        let left = 0;
+        if (target.matches('.prev')) {
+            left = left - 425;
+            if (left < -1125) {
+                left = 0;
+            } else {
+                left -=  425;
+            }
+            allSlider.style.left = left + 'px';
+        }
+        if (target.matches('.next')) {
+            if(left < 0) {
+                left = left + 325;
+            } else {
+                left = -1125;
+            }
+            if (left <= - 1125) {
+                left = 0;
+            }
+            allSlider.style.left = left + 'px';
+        }
+            
+        
+         if (target.closest('.dot')) {
+            dots.forEach((elem, index) => {
+                if (elem === target.closest('.dot')) {
+                    currentSlide = index;
+                }
+            });
+        }
+
+        if (currentSlide >= slides.length) {
+            currentSlide = 0;
+        }
+        if (currentSlide < 0) {
+            currentSlide = slides.length - 1;
+        }
+
+        if (!carusel) {
+            nextSlide(slides, currentSlide, 'active');
+        }
+        if (dote) {
+            nextSlide(dots, currentSlide, 'slick-active');
+        }
+    });
+
+    slider.addEventListener('mouseover', (event) => {
+        if (event.target.matches('.slider-arrow') || event.target.matches('.dot button')) {
+            stopSlide();
+        }
+    });
+
+    slider.addEventListener('mouseout', (event) => {
+        if (event.target.matches('.slider-arrow') || event.target.matches('.dot button')) {
+            startSlide();
+        }
+    });
+
+    startSlide();
+};
+slider('.main-slider', 1000, true, false);
+slider('.gallery-slider', 2000, true, true);
+slider('.services-slider', 1, false, true, true);
