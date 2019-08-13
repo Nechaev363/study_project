@@ -119,7 +119,7 @@ const sendForm = (idForm) => {
     const form = document.getElementById(idForm);
     const thanks = document.getElementById('thanks');
     const statusMessage = document.createElement('div');
-    
+
 
     statusMessage.style.cssText = `font-size: 1rem; margin: 1rem 0; color: white`;
     const postData = (body) => {
@@ -133,10 +133,10 @@ const sendForm = (idForm) => {
         });
     };
 
-     
-        const ckeckForm = (form) => {
-            event.preventDefault();
-        
+
+    const ckeckForm = (form) => {
+        event.preventDefault();
+
         form.appendChild(statusMessage);
         const formData = new FormData(form);
         let body = {};
@@ -173,15 +173,15 @@ const sendForm = (idForm) => {
                 });
             })
             .catch((error) => {
-                
+
                 statusMessage.textContent = errorMessage;
                 console.error(error);
 
             });
-        }
-        ckeckForm(idForm);
-        
-    };
+    }
+    ckeckForm(idForm);
+
+};
 
 
 const statusContect = document.createElement('div');
@@ -212,21 +212,72 @@ document.body.addEventListener('submit', (event) => {
 //service-slider 
 
 const serviceSlider = () => {
-    
+
     const sliderServ = document.querySelector('.services-slider');
-    const slideSingler = document.querySelectorAll('.slide-single');
+    const slide = sliderServ.querySelectorAll('.slider-singler');
+    const allSliders = sliderServ.querySelector('.all-sliders');
+    let arro;
+
+    let left = 0;
     let i = 0;
-   
-    
-    for (let i = 0; i < slideSingler.length; i++) {
-        if(slideSingler.length > 5) {
-            slideSingler[i].style.cssText = `display: none`;
-            i++;
+    sliderServ.addEventListener('click', (event) => {
+        event.preventDefault();
+        let target = event.target;
+        target = target.closest('.slider-arrow');
+        console.log(target);
+        if (!target.matches('.prev, .next')) {
+            return;
         }
-        slideSingler[i].addEventListener('click', () => {
-            slideSingler[i].style.cssText = `display: inline-block`;
-        })
-    }
+        if (target.matches('.prev')) {
+            left = left - 225;
+            if (left <= -1125) {
+                left = 0;
+            } else {
+                left = left - 225;
+            }
+            allSliders.style.left = left + 'px';
+        }
+        if (target.matches('.next')) {
+                left = left - 325;
+                if(left <= -1125) {
+                    left = 0;
+                }
+        
+            
+            allSliders.style.left = left + 'px';
+        }
+        
+    });
+    const arrow = () => {
+        if (!arrow) {
+            return;
+        }
+
+        const createArrow = (procreator) => {
+            let createDiv;
+            let createSpan;
+
+            for (let i = 0; i <= 1; i++) {
+                createDiv = document.createElement('div');
+                createSpan = document.createElement('span');
+                procreator.append(createDiv);
+                createDiv.classList.add('slider-arrow');
+                createDiv.appendChild(createSpan);
+                
+            }
+
+            document.querySelectorAll('.slider-arrow')[0].classList.add('prev');
+            document.querySelectorAll('.slider-arrow')[1].classList.add('next');
+        };
+        createArrow(sliderServ);
+          arro = sliderServ.querySelectorAll('.slider-arrow');
+        
+        
+    };
+    
+    
+    arrow();
+    
 }
 
-serviceSlider()
+serviceSlider();
