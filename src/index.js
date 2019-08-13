@@ -211,25 +211,25 @@ document.body.addEventListener('submit', (event) => {
 
 //service-slider 
 
-const serviceSlider = () => {
+// const serviceSlider = () => {
     
-    const sliderServ = document.querySelector('.services-slider');
-    const slideSingler = document.querySelectorAll('.slide-single');
-    let i = 0;
-    for (let i = 0; i < slideSingler.length; i++) {
-        if(slideSingler.length > 5) {
-            slideSingler[i].style.cssText = `display: none`;
-            i++;
-        }
-        slideSingler[i].addEventListener('click', () => {
-            slideSingler[i].style.cssText = `display: inline-block`;
-        })
-    }
+//     const sliderServ = document.querySelector('.services-slider');
+//     const slideSingler = document.querySelectorAll('.slide-single');
+//     let i = 0;
+//     for (let i = 0; i < slideSingler.length; i++) {
+//         if(slideSingler.length > 5) {
+//             slideSingler[i].style.cssText = `display: none`;
+//             i++;
+//         }
+//         slideSingler[i].addEventListener('click', () => {
+//             slideSingler[i].style.cssText = `display: inline-block`;
+//         })
+//     }
 
     
 
 
 
-}
+// }
 
-serviceSlider()
+// serviceSlider()
