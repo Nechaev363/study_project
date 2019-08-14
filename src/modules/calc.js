@@ -66,9 +66,11 @@ const calc = () => {
     };
 
     parsingPrice();
-    promoCod.addEventListener('input', () => {
-        saleS();
-    })
+    if (promoCod) {
+        promoCod.addEventListener('input', () => {
+            saleS();
+        })
+    }
     radioButton.forEach((e) => {
         e.addEventListener('click', () => {
             promoCod.value = '';
