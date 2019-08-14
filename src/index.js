@@ -183,7 +183,6 @@ document.body.addEventListener('submit', (event) => {
 });
 //slider
 const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = false) => {
-   
     let slider = document.querySelector(elemet),
         slides = slider.querySelectorAll('.slide'),
         currentSlide = 0,
@@ -211,7 +210,7 @@ const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = fal
                 creatLi.appendChild(creatBut);
                 creatLi.classList.add('dot');
 
-                if (i === 1) {
+                if (i === 1){
                     creatLi.classList.add('slick-active');
                 }
             }
@@ -227,11 +226,11 @@ const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = fal
             return;
         }
 
-        const creatArrow = (father) => {
+        const creatArrow = (father) =>{
             let creatDiv,
                 creatSpan;
 
-            for (let i = 0; i <= 1; i++) {
+            for (let i = 0; i <= 1; i++){
                 creatDiv = document.createElement('div');
                 creatSpan = document.createElement('span');
                 father.append(creatDiv);
@@ -239,8 +238,8 @@ const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = fal
                 creatDiv.appendChild(creatSpan);
             }
 
-            document.querySelectorAll('.slider-arrow')[0].classList.add('prev');
-            document.querySelectorAll('.slider-arrow')[1].classList.add('next')
+            father.querySelectorAll('.slider-arrow')[0].classList.add('prev');
+            father.querySelectorAll('.slider-arrow')[1].classList.add('next');
         };
 
         creatArrow(slider);
@@ -292,42 +291,46 @@ const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = fal
 
         let target = event.target;
         
-        if (!target.matches('.slider-arrow span, .dot button')) {
+        if (!target.matches('.slider-arrow span, .dot button')){
             return;
         }
-
-        if (!carusel) {
+    
+        if (!carusel){
             prevSlide(slides, currentSlide, 'active');
         }
         if (dote) {
             prevSlide(dots, currentSlide, 'slick-active');
         }
-        const allSlider = document.querySelector('.all-sliders');
-        target = target.closest('.slider-arrow');
-        let left = 0;
-        if (target.matches('.prev')) {
-            left = left - 425;
-            if (left < -1125) {
-                left = 0;
-            } else {
-                left -=  425;
+
+        if (target.closest('.slider-arrow.next')) {
+            currentSlide++;
+            if (carusel){
+                let maLeft = slides[0].style.marginLeft,
+                    colSl = slides.length;
+                colSl = (colSl - 5) * 200;
+                maLeft = maLeft.slice(1, -2);
+
+                if (+maLeft <= colSl){
+                    maLeft = +maLeft + 225;
+                    slides[0].style.marginLeft = '-' + maLeft + 'px';
+                }
             }
-            allSlider.style.left = left + 'px';
-        }
-        if (target.matches('.next')) {
-            if(left < 0) {
-                left = left + 325;
-            } else {
-                left = -1125;
+        } else if (target.closest('.slider-arrow.prev')) {
+            currentSlide--;
+
+            if (carusel){
+                let maLeft = slides[0].style.marginLeft;
+                    maLeft = maLeft.slice(0, -2);
+
+                if (maLeft === '' || +maLeft === 0){
+                    maLeft = 0;
+                    slides[0].style.marginLeft = maLeft + 'px';
+                } else {
+                    maLeft = +maLeft + 225;
+                    slides[0].style.marginLeft = maLeft + 'px';
+                }
             }
-            if (left <= - 1125) {
-                left = 0;
-            }
-            allSlider.style.left = left + 'px';
-        }
-            
-        
-         if (target.closest('.dot')) {
+        } else if (target.closest('.dot')) {
             dots.forEach((elem, index) => {
                 if (elem === target.closest('.dot')) {
                     currentSlide = index;
@@ -335,14 +338,14 @@ const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = fal
             });
         }
 
-        if (currentSlide >= slides.length) {
+        if (currentSlide >= slides.length ) {
             currentSlide = 0;
         }
         if (currentSlide < 0) {
             currentSlide = slides.length - 1;
         }
 
-        if (!carusel) {
+        if (!carusel){
             nextSlide(slides, currentSlide, 'active');
         }
         if (dote) {
@@ -366,4 +369,64 @@ const slider = (elemet, speed = 3000, dote = false, arrow = false, carusel = fal
 };
 slider('.main-slider', 1000, true, false);
 slider('.gallery-slider', 2000, true, true);
-slider('.services-slider', 1, false, true, true);
+
+const serviceSlide = () => {
+    const sliderServ = document.querySelector('.services-slider');
+    const allSliders = sliderServ.querySelector('.all-sliders');
+    let arro;
+    const arrows = () => {
+
+        const creatArrow = (father) =>{
+            let creatDiv,
+                creatSpan;
+
+            for (let i = 0; i <= 1; i++){
+                creatDiv = document.createElement('div');
+                creatSpan = document.createElement('span');
+                father.append(creatDiv);
+                creatDiv.classList.add('slider-arrow');
+                creatDiv.appendChild(creatSpan);
+            }
+
+            father.querySelectorAll('.slider-arrow')[0].classList.add('prev');
+            father.querySelectorAll('.slider-arrow')[1].classList.add('next');
+        };
+
+        creatArrow(sliderServ);
+        arro = sliderServ.querySelectorAll('.slider-arrow');
+    };
+    arrows();
+
+    let left = 0;
+    sliderServ.addEventListener('click', (event) => {
+        event.preventDefault();
+        let target = event.target;
+        target = target.closest('.slider-arrow');
+        
+        if (!target.matches('.prev, .next')) {
+            return;
+        };
+        if (target.matches('.prev')) {
+            
+            if(left <= -1125) {
+                left = 0;
+                
+            }else {
+                left = left -225
+            }
+            allSliders.style.left = left + 'px'
+            
+        }
+        if(target.matches('.next')) {
+            if (left < 0) {
+                left = left + 225;
+            } else {
+                left = -1125;
+            }
+            allSliders.style.left = left + 'px';
+        }
+        
+    })
+
+}
+serviceSlide();
