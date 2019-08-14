@@ -1,7 +1,7 @@
 const valid = () => {
     const inputValueText = document.querySelectorAll('input[type="text"]');
     const inputValueTel = document.querySelectorAll('input[type="tel"]');
-    let value = '';
+    let statusInputError = 'Необходимо запонить форму';
 
     inputValueText.forEach((elements) => {
         elements.addEventListener('input', (elem) => { 

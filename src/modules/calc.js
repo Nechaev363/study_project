@@ -41,6 +41,7 @@ const calc = () => {
 
     const setTotalPrice = (total) => {
         totalPrice.textContent = total;
+        promocode.value = '';
     };
 
     const pricingMonth = () => {
