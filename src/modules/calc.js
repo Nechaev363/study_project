@@ -65,7 +65,7 @@ const calc = () => {
     
     parsingPrice();
 
-    promocode.addEventListener('input', () => {
+    promocode.addEventListener('change', () => {
         sale()
     });
     
