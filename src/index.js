@@ -23,9 +23,10 @@ import valid from './modules/valid';
 header();
 
 // ajax-send-form
-const statusContect = document.createElement('div');
-statusContect.style.cssText = `font-size: 1rem; margin: 1rem 0; color: red`;
+
 document.body.addEventListener('submit', (event) => {
+    const statusContect = document.createElement('div');
+    statusContect.style.cssText = `font-size: 1rem; margin: 1rem 0; color: red`;
     event.preventDefault();
     let target = event.target,
         check = '';
