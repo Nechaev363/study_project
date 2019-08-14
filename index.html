@@ -208,7 +208,7 @@
             <h2>Записаться на бесплатный&nbsp;визит</h2>
             <div class="form-wrapper">
                 <form name="banner-form" id="banner-form" action="#" method="post" novalidate>
-                    <input type="hidden" name="form_name" novalidate value=" Записаться на визит">
+                    <input type="hidden" name="form_name" novalidate value=" Записаться на визит" novalidate>
                     <input name="name" type="text" required placeholder="Ваше имя..." novalidate>
                     <input type="tel" name="phone" id="phone" required placeholder="Ваш номер телефона..." novalidate>
                     <button name="send" class="btn" type="submit">Записаться</button>
@@ -361,7 +361,7 @@
                         <input type="hidden" name="form_name" value="Заказать карту" novalidate>
                         <p class="input-text"><input name="name" type="text" required placeholder="Ваше имя..."></p>
                         <p class="input-text"><input type="tel" name="phone" id="callback_form-phone" required
-                                placeholder="Ваш номер телефона..."></p>
+                                placeholder="Ваш номер телефона..." novalidate></p>
                         <p class="personal-data">
                             <input type="checkbox" required id="card_check"><label for="card_check" novalidate>Я
                                 согласен на обработку
@@ -421,7 +421,7 @@
                                 <p>Единый телефон</p>
                                 <p class="tel">+7 (800) 555-64-47</p>
                                 <p class="input-text"><input type="tel" name="phone" id="callback_footer_form-phone"
-                                        required="" placeholder="Ваш номер телефона..."></p>
+                                        required="" placeholder="Ваш номер телефона..." novalidate></p>
 
                                 <button class="btn callback-btn" type="submit" data-popup="#callback_form">Перезвоните
                                     мне
