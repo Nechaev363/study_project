@@ -9,31 +9,18 @@ const calc = () => {
         radioButtonActive;
 
     const selectClub = () => {
-
         radioButton.forEach((e) => {
-
             if (e.checked) {
                 radioButtonActive = e.id;
             }
         });
     };
 
-
-
     const parsingPrice = () => {
-
         pricingMonth();
-
-
-
         inputMonth.forEach((e) => {
-
             e.setAttribute('data-price', priceMonth[e.id]);
-
         });
-
-
-
         if (inputMonth.length > 0) {
 
             inputMonth[0].click();
@@ -44,16 +31,10 @@ const calc = () => {
     const saleS = () => {
 
         let totalP = totalPrice.textContent;
-        if (promoCod.value === 'ÒÅËÎ2019') {
-
+        if (promoCod.value === 'ТЕЛО2019') {
             let sale = totalP * 30 / 100;
-
             totalP = totalP - sale;
-
-
-
             totalP = Math.ceil(totalP);
-
         }
 
         setTotalPrice(totalP);
@@ -61,7 +42,6 @@ const calc = () => {
     }
 
     const setTotalPrice = (total) => {
-
         totalPrice.textContent = total;
 
     };
@@ -86,27 +66,17 @@ const calc = () => {
     };
 
     parsingPrice();
-
     promoCod.addEventListener('input', () => {
-
         saleS();
-
     })
-
     radioButton.forEach((e) => {
-
         e.addEventListener('click', () => {
-
             promoCod.value = '';
-
             parsingPrice();
-
         });
-
     });
 
     inputMonth.forEach((e) => {
-
         e.addEventListener('click', () => {
             promoCod.value = '';
             setTotalPrice(e.getAttribute('data-price'));
